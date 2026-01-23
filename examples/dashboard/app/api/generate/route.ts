@@ -1,8 +1,13 @@
 import { streamText } from "ai";
 import { componentList } from "@/lib/catalog";
+import { deepSeek } from "@/utils/ai-sdk";
 
 export const maxDuration = 30;
 
+/**
+ * 中文：
+ * 你是一个仪表盘组件生成器，输出 JSONL (JSON Lines) 补丁。
+ */
 const SYSTEM_PROMPT = `You are a dashboard widget generator that outputs JSONL (JSON Lines) patches.
 
 AVAILABLE COMPONENTS:
@@ -58,7 +63,7 @@ EXAMPLE - Revenue Dashboard:
 
 Generate JSONL patches now:`;
 
-const DEFAULT_MODEL = "anthropic/claude-haiku-4.5";
+// const DEFAULT_MODEL = "anthropic/claude-haiku-4.5";
 
 export async function POST(req: Request) {
   const { prompt, context } = await req.json();
@@ -71,7 +76,7 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: process.env.AI_GATEWAY_MODEL || DEFAULT_MODEL,
+    model: deepSeek(process.env.AI_Q_WEN_DEEPSEEK_MODEL || ""),
     system: SYSTEM_PROMPT,
     prompt: fullPrompt,
     temperature: 0.7,

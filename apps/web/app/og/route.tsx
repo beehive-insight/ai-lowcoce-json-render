@@ -1,5 +1,10 @@
 import { ImageResponse } from "next/og";
 
+/**
+ * 生成og图片 中生成 Open Graph (OG) 图像
+ * @param request
+ * @returns
+ */
 export async function GET(request: Request) {
   const geist = await fetch(new URL("/Geist-Regular.ttf", request.url)).then(
     (res) => res.arrayBuffer(),
